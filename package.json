@@ -1,0 +1,35 @@
+{
+  "name": "reactionary",
+  "version": "1.0.0",
+  "description": "React-redux modularization",
+  "main": "lib/index.js",
+  "repository": "https://github.com/yagarasu/reactionary.git",
+  "author": "Alexys Hegmann <alexys.hegmann@pslgroup.com>",
+  "license": "MIT",
+  "private": false,
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ]
+  },
+  "scripts": {
+    "build": "babel src --out-dir lib"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "prop-types": "^15.6.2",
+    "react": "^16.5.2"
+  },
+  "dependencies": {
+    "connected-react-router": "^4.5.0",
+    "history": "^4.7.2",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.3.1",
+    "redux": "^4.0.0",
+    "redux-saga": "^0.16.1"
+  }
+}
