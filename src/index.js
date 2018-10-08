@@ -7,7 +7,7 @@ import ModuleManager from './ModuleManager'
 import DefaultNoMatch from './components/DefaultNoMatch'
 import createStore from './store'
 
-export default modules => {
+export default (modules, options = {}) => {
   // Build the thing...
   const mm = new ModuleManager(modules)
   // Default 404
@@ -21,7 +21,7 @@ export default modules => {
   const history = createBrowserHistory()
 
   // Reducers
-  const store = createStore(mm, history)
+  const store = createStore(mm, options, history)
 
   const Kernel = props => (
     <Provider store={store}>

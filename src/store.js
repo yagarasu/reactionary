@@ -7,12 +7,16 @@ import {
 import { connectRouter, routerMiddleware } from 'connected-react-router'
 import createSagaMiddleware from 'redux-saga'
 import { all } from 'redux-saga/effects'
+import { sessionReducer, sessionService } from 'redux-react-session'
 
-export default (mm, history) => {
+export default (mm, options, history) => {
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
   const reducers = connectRouter(history)(
-    combineReducers({ ...mm.reducers })
+    combineReducers({
+      session: sessionReducer,
+      ...mm.reducers
+    })
   )
 
   const sagaMiddleware = createSagaMiddleware()
@@ -32,6 +36,8 @@ export default (mm, history) => {
   )
 
   sagaMiddleware.run(createRootSaga())
+
+  sessionService.initSessionService(store, options.sessionService)
 
   return store
 }
