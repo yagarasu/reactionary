@@ -13,18 +13,22 @@ class ModuleManager {
     this.modules.forEach(m => m.register(this))
   }
 
-  pushInto(arr, el, weight) {
+  pushInto (arr, el, weight) {
     if (!Array.isArray(arr)) throw new TypeError('pushInto requires arr to be an array')
     let idx = 0
     while (idx < arr.length && weight <= arr[idx].weight) { idx++ }
     arr.splice(idx, 0, { el, weight })
   }
 
-  getFrom(type) {
-    console.log('getFrom', type)
-    const arr = this[type]
-    if (!Array.isArray(arr)) throw new TypeError('getFrom requires type to map to an internal array')
-    return arr.map(({ el }) => el)
+  get (type) {
+    const types = ['routes', 'middlewares', 'sagas', 'reducers']
+    if (!types.includes(type)) throw new TypeError(`Invalid type ${type}.`)
+    const repo = this[type]
+    if (Array.isArray(repo)) {
+      return repo.map(({ el }) => el)
+    } else {
+      return repo
+    }
   }
 
   registerRoute (path, component, extra, weight = 0) {
@@ -45,6 +49,10 @@ class ModuleManager {
 
   registerSaga (saga, weight = 0) {
     this.pushInto(this.sagas, saga, weight)
+  }
+
+  trigger (hook, ...args) {
+    this.modules.forEach(m => typeof m[hook] === 'function' && m[hook](...args))
   }
 
 }
